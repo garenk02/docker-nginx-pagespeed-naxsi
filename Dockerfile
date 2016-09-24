@@ -59,7 +59,8 @@ RUN apt-get update \
   && cd ~/custom-nginx \
   && mkdir -p /etc/nginx/ \
   && mkdir -p /var/log/nginx/ \
-  && cp naxsi-$NAXSI_VERSION/naxsi_config/naxsi_core.rules /etc/nginx/naxsi_core.rules
+  && cp naxsi-$NAXSI_VERSION/naxsi_config/naxsi_core.rules /etc/nginx/naxsi_core.rules \
+  && rm -rf ~/custom-nginx 
 
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
