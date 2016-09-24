@@ -67,6 +67,6 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
 
 EXPOSE 80 443
 
-VOLUME /etc/nginx
+VOLUME /etc/nginx /var/www
 
 CMD ["/usr/local/nginx/sbin/nginx", "-g", "daemon off;"]
