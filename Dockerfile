@@ -10,9 +10,6 @@ ENV OPENSSL_VERSION 1.1.0a
 ENV ZLIB_VERSION 1.2.8
 ENV PCRE_VERSION 8.39
 
-ENV CFLAGS "-g -O3 -march=native -flto -pipe -fwhole-program -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security -D_FORTIFY_SOURCE=2"
-ENV LDFLAGS "${CXXFLAGS} -Wall -Wl,-Bsymbolic-functions -Wl,-z,relro"
-
 RUN apt-get update \
   && apt-get build-dep --no-install-recommends -y nginx \
   && apt-get install --no-install-recommends wget unzip -y \
@@ -37,8 +34,8 @@ RUN apt-get update \
   && cd nginx-${NGINX_VERSION} \
   && ./configure \
         --prefix=/usr/share/nginx \
-        --with-cc-opt='-g -O3 -march=native -flto -pipe -fwhole-program -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security -D_FORTIFY_SOURCE=2' \
-        --with-ld-opt='-g -O3 -march=native -flto -pipe -fwhole-program -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security -D_FORTIFY_SOURCE=2 -Wall -Wl,-Bsymbolic-functions -Wl,-z,relro' \
+        --with-cc-opt='-g -O3 -flto -pipe -fwhole-program -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security -D_FORTIFY_SOURCE=2' \
+        --with-ld-opt='-g -O3 -flto -pipe -fwhole-program -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security -D_FORTIFY_SOURCE=2 -Wall -Wl,-Bsymbolic-functions -Wl,-z,relro' \
         --add-module=../ngx_pagespeed-release-${NPS_VERSION}-beta ${PS_NGX_EXTRA_FLAGS} \
         --add-module=../naxsi-${NAXSI_VERSION}/naxsi_src/ \
         --with-zlib=../zlib-${ZLIB_VERSION} \
@@ -60,7 +57,7 @@ RUN apt-get update \
   && mkdir -p /etc/nginx/ \
   && mkdir -p /var/log/nginx/ \
   && cp naxsi-$NAXSI_VERSION/naxsi_config/naxsi_core.rules /etc/nginx/naxsi_core.rules \
-  && rm -rf ~/custom-nginx 
+  && rm -rf ~/custom-nginx
 
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
