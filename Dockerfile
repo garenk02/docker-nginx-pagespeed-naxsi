@@ -67,4 +67,4 @@ EXPOSE 80 443
 
 VOLUME /etc/nginx /var/www
 
-CMD ["/usr/local/nginx/sbin/nginx", "-g", "daemon off;"]
+CMD ["/usr/share/nginx/sbin/nginx", "-g", "daemon off;"]
