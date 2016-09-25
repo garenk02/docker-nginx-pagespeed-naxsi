@@ -51,6 +51,11 @@ RUN apt-get update \
         --without-mail_imap_module \
         --user=www-data \
         --group=www-data \
+        --conf-path=/etc/nginx/nginx.conf \
+        --http-log-path=/var/log/nginx/access.log \
+        --error-log-path=/var/log/nginx/error.log \
+        --lock-path=/var/lock/nginx.lock \
+        --pid-path=/run/nginx.pid \
   && make -j`nproc` \
   && make install \
   && cd ~/custom-nginx \
